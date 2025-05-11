@@ -7,9 +7,17 @@ const Todo = () => {
 
   const addTask = () => {
     if (inputVal.trim() !== "") {
-      setTask([...task, inputVal]);
+      setTask([...task, { text: inputVal, completed: false }]);
       setInputVal("");
     }
+  };
+
+  const taskCompleted = (index) => {
+    setTask(
+      task.map((t, idx) =>
+        idx === index ? { ...t, completed: !t.completed } : t
+      )
+    );
   };
 
   const deleteTask = (indexRemove) => {
@@ -28,7 +36,7 @@ const Todo = () => {
         ></input>
         <button onClick={addTask}>Add Task</button>
         <ul>
-          {task.map((task, index) => (
+          {task.map((t, index) => (
             <div
               key={index}
               style={{
@@ -37,7 +45,16 @@ const Todo = () => {
                 margin: "2rem 2rem 0px 0px",
               }}
             >
-              <li>{task} </li>
+              <li
+                onClick={() => taskCompleted(index)}
+                style={{
+                  textDecoration: t.completed ? "line-through" : "none",
+                  color: t.completed ? "gray" : "black", // Optional: To change text color when completed
+                  cursor: "pointer",
+                }}
+              >
+                {t.text}{" "}
+              </li>
               <button
                 style={{
                   background: "red",
