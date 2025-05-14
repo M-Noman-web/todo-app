@@ -1,47 +1,109 @@
-.containers {
+.todo-container {
   text-align: center;
-  padding: 10px;
-  width: 500px;
-  border-radius: 10px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
   margin: 2rem auto;
   background-color: white;
-  box-shadow: 0px 2px 6px 0px black;
-}
-h1 {
-  font-size: 3rem;
-  color: rgb(50, 9, 9);
-  font-family: sans-serif;
-  margin-bottom: 2.5rem;
-}
-
-input {
-  text-align: start;
-  padding: 16px 6px;
   border-radius: 10px;
-  width: 300px;
-  font-size: 18px;
-  color: black;
-  border: none;
-  box-shadow: 0px 0px 2px 1px black;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-button {
-  text-align: end;
-  margin-left: 1rem;
-  padding: 12px 20px;
+.todo-heading {
+  font-size: 2.5rem;
+  color: #320909;
+  font-family: sans-serif;
+  margin-bottom: 2rem;
+}
+
+.todo-input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.todo-input-group input {
+  padding: 14px 12px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 300px;
+  font-size: 16px;
+  border: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.todo-input-group button {
+  padding: 14px 20px;
   border: none;
   font-size: 16px;
-  border-radius: 12px;
+  border-radius: 10px;
   background-color: rgb(13, 139, 13);
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
+.todo-input-group button:hover {
   background-color: rgb(14, 104, 14);
 }
 
-li {
+.todo-list {
   list-style: none;
-  font-size: 24px;
+  padding: 0;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.task-text {
+  font-size: 18px;
+  color: black;
+  cursor: pointer;
+  word-wrap: break-word;
+  max-width: 70%;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .todo-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .todo-input-group input,
+  .todo-input-group button {
+    width: 100%;
+  }
+
+  .task-text {
+    max-width: 100%;
+  }
 }

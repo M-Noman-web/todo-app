@@ -1,9 +1,22 @@
-import { useState } from "react";
-import "../App.css";
+import { useEffect, useState } from "react";
+import "../App.css"; // Make sure this path is correct
 
 const Todo = () => {
   const [task, setTask] = useState([]);
   const [inputVal, setInputVal] = useState("");
+
+  // ✅ Load tasks from localStorage on first render
+  useEffect(() => {
+    const storedTasks = localStorage.getItem("todo-tasks");
+    if (storedTasks) {
+      setTask(JSON.parse(storedTasks));
+    }
+  }, []);
+
+  // ✅ Save tasks to localStorage whenever task state changes
+  useEffect(() => {
+    localStorage.setItem("todo-tasks", JSON.stringify(task));
+  }, [task]);
 
   const addTask = () => {
     if (inputVal.trim() !== "") {
@@ -25,49 +38,35 @@ const Todo = () => {
   };
 
   return (
-    <>
-      <div className="containers">
-        <h1>Simple Todo App</h1>
+    <div className="todo-container">
+      <h1 className="todo-heading">Simple Todo App</h1>
+      <div className="todo-input-group">
         <input
           value={inputVal}
           onChange={(e) => setInputVal(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && addTask()} // ✅ Add task on Enter key
           type="text"
-          placeholder="Enter todo task here"
-        ></input>
+          placeholder="Enter task here"
+        />
         <button onClick={addTask}>Add Task</button>
-        <ul>
-          {task.map((t, index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                margin: "2rem 2rem 0px 0px",
-              }}
-            >
-              <li
-                onClick={() => taskCompleted(index)}
-                style={{
-                  textDecoration: t.completed ? "line-through" : "none",
-                  color: t.completed ? "gray" : "black", // Optional: To change text color when completed
-                  cursor: "pointer",
-                }}
-              >
-                {t.text}{" "}
-              </li>
-              <button
-                style={{
-                  background: "red",
-                }}
-                onClick={() => deleteTask(index)}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </ul>
       </div>
-    </>
+
+      <ul className="todo-list">
+        {task.map((t, index) => (
+          <div key={index} className="todo-item">
+            <li
+              className={`task-text ${t.completed ? "completed" : ""}`}
+              onClick={() => taskCompleted(index)}
+            >
+              {t.text}
+            </li>
+            <button className="delete-btn" onClick={() => deleteTask(index)}>
+              Delete
+            </button>
+          </div>
+        ))}
+      </ul>
+    </div>
   );
 };
 
